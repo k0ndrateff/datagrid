@@ -10,7 +10,24 @@ const Root = styled.div`
   align-items: center;
 
   padding: 8px;
+  box-sizing: border-box;
   border: 0.5px solid var(--cell-border-inactive);
+  transition: var(--main-transition);
+  
+  &:hover {
+    cursor: cell;
+    
+    border: 0.5px solid var(--cell-border-hover);
+    transition: none;
+  }
+`;
+
+const Value = styled.span`
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 24px;
+  color: var(--cell-value);
+  font-family: var(--main-font);
 `;
 
 interface Props {
@@ -22,7 +39,9 @@ const Cell = observer((props: Props) => {
 
   return (
     <Root>
-      {model.computedValue}
+      <Value>
+        {model.computedValue}
+      </Value>
     </Root>
   );
 });
