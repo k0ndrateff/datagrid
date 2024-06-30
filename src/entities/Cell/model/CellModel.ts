@@ -1,10 +1,11 @@
 import { makeAutoObservable } from "mobx";
+import {CellAddress} from "@/shared";
 
 export class CellModel {
   value: string;
-  address: string;
+  address: CellAddress;
 
-  constructor({ value, address }: { value: string; address: string }) {
+  constructor({ value, address }: { value: string; address: CellAddress }) {
     this.value = value;
     this.address = address;
 
@@ -15,7 +16,7 @@ export class CellModel {
     return this.value;
   }
 
-  static empty(address: string): CellModel {
+  static empty(address: CellAddress): CellModel {
     return new CellModel({
       address: address,
       value: "0"
