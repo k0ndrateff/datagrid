@@ -8,6 +8,7 @@ function pathResolve(dir: string) {
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: process.env.NODE_ENV === 'production' ? '/datagrid/' : '/',
   plugins: [react()],
   resolve: {
     alias: {
