@@ -21,11 +21,11 @@ export class GridModel {
 
     for (let i = 0; i < this.rows; i++) {
       for (let j = 0; j < this.columns; j++) {
-        if (this.cells.has([i, j])) {
-          result.push(this.cells.get([i, j])!);
+        if (this.cells.has([j, i])) {
+          result.push(this.cells.get([j, i])!);
         }
         else {
-          result.push(CellModel.empty([i, j]));
+          result.push(CellModel.empty([j, i]));
         }
       }
     }
