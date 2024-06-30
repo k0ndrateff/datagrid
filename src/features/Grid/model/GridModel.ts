@@ -35,8 +35,8 @@ export class GridModel {
 
   static default(): GridModel {
     return new GridModel({
-      columns: 20,
-      rows: 20,
+      columns: 100,
+      rows: 100,
       cells: new Map<CellAddress, CellModel>(),
     });
   }
