@@ -90,7 +90,7 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
   display: grid;
   grid-template-columns: repeat(${e=>e.$columns}, 1fr);
   grid-template-rows: repeat(${e=>e.$rows}, 1fr);
-`,O1=Ql(e=>{const{model:t,selectionModel:n}=e;return ge.jsx(E1,{$columns:t.columns,$rows:t.rows,children:t.displayCells.map(r=>ge.jsx(w1,{model:r,editable:n.selectedCell===r.address,onClick:n.selectCell},String(r.address)))})});class oc{constructor({columns:t,rows:n,cells:r}){this.columns=t,this.rows=n,this.cells=r,Hl(this)}get displayCells(){const t=[];for(let n=0;n<this.rows;n++)for(let r=0;r<this.columns;r++)this.cells.has([n,r])?t.push(this.cells.get([n,r])):t.push(ic.empty([n,r]));return t}static default(){return new oc({columns:100,rows:100,cells:new Map})}}class k1{constructor(){this.selectCell=t=>{this.selectedCell=t},this.selectedCell=void 0,Hl(this)}}const x1=Ln.div`
+`,O1=Ql(e=>{const{model:t,selectionModel:n}=e;return ge.jsx(E1,{$columns:t.columns,$rows:t.rows,children:t.displayCells.map(r=>ge.jsx(w1,{model:r,editable:n.selectedCell===r.address,onClick:n.selectCell},String(r.address)))})});class oc{constructor({columns:t,rows:n,cells:r}){this.columns=t,this.rows=n,this.cells=r,Hl(this)}get displayCells(){const t=[];for(let n=0;n<this.rows;n++)for(let r=0;r<this.columns;r++)this.cells.has([r,n])?t.push(this.cells.get([r,n])):t.push(ic.empty([r,n]));return t}static default(){return new oc({columns:100,rows:100,cells:new Map})}}class k1{constructor(){this.selectCell=t=>{this.selectedCell=t},this.selectedCell=void 0,Hl(this)}}const x1=Ln.div`
   position: fixed;
   top: ${e=>e.$top?`${e.$top}px`:"unset"};
   right: ${e=>e.$right?`${e.$right}px`:"unset"};
