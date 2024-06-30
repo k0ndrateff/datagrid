@@ -64,7 +64,7 @@ const Cell = observer((props: Props) => {
     if (editable && inputRef.current) {
       inputRef.current.focus();
     }
-  }, [editable, inputRef.current]);
+  }, [editable]);
 
   const handleChange = useCallback<ChangeEventHandler<HTMLInputElement>>(e => {
     const value = e.target.value;
