@@ -23,7 +23,8 @@ const Root = styled.div<RootProps>`
   gap: 16px;
   
   padding: 16px;
-  border-radius: 16px;
+  border-radius: 12px;
+  background: var(--background-main);
   box-shadow: var(--floating-panel-shadow);
 `;
 

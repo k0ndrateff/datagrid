@@ -3,9 +3,12 @@
   --cell-border-inactive: #ccc5b9;
   --cell-border-hover: #403d39;
   --cell-value: #252422;
+  --background-main: #ffffff;
+  --background-attenuated: #fffcf2;
 
   /* Fonts */
   --main-font: -apple-system, Helvetica, sans-serif;
+  --mono-font: "Fira Code", monospace;
 
   /* Other */
   --main-transition: all 200ms ease-in-out;
