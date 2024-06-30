@@ -1,4 +1,4 @@
 :root {
   /* Colors */
-  --cell-border-inactive: rgba(0, 0, 0, 0.3)
+  --cell-border-inactive: #ccc5b9;
 }

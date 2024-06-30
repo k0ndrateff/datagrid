@@ -9,7 +9,8 @@ const Root = styled.div`
   display: flex;
   align-items: center;
 
-  border: 1px solid var(--cell-border-inactive);
+  padding: 8px;
+  border: 0.5px solid var(--cell-border-inactive);
 `;
 
 interface Props {

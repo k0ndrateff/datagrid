@@ -19,7 +19,7 @@ export class CellModel {
   static empty(address: CellAddress): CellModel {
     return new CellModel({
       address: address,
-      value: "0"
+      value: ""
     });
   }
 }
