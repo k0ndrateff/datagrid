@@ -1,7 +1,7 @@
 import { CellModel } from "../model/CellModel";
 import { observer } from 'mobx-react-lite';
 import styled, {css} from "styled-components";
-import {ChangeEventHandler, MouseEventHandler, useCallback} from "react";
+import {ChangeEventHandler, MouseEventHandler, useCallback, useEffect, useRef} from "react";
 import {CellAddress} from "@/shared";
 
 const Root = styled.div`
@@ -25,11 +25,15 @@ const Root = styled.div`
 `;
 
 const TextStyles = css`
+  max-width: 100%;
+  
   font-size: 18px;
   font-weight: 500;
   line-height: 24px;
   color: var(--cell-value);
   font-family: var(--main-font);
+  
+  overflow: hidden;
 `;
 
 const Value = styled.span`
@@ -37,6 +41,11 @@ const Value = styled.span`
 `;
 
 const Input = styled.input`
+  border: none;
+  outline: none;
+  padding: 0;
+  margin: 0;
+  
   ${TextStyles};
 `;
 
@@ -48,6 +57,14 @@ interface Props {
 
 const Cell = observer((props: Props) => {
   const { model, editable, onClick } = props;
+
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (editable && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [editable, inputRef.current]);
 
   const handleChange = useCallback<ChangeEventHandler<HTMLInputElement>>(e => {
     const value = e.target.value;
@@ -62,7 +79,7 @@ const Cell = observer((props: Props) => {
   return (
     <Root onClick={handleClick}>
       {editable ? (
-        <Input type="text" onChange={handleChange} />
+        <Input ref={inputRef} type="text" value={model.value} onChange={handleChange} />
       ) : (
         <Value>
           {model.computedValue}
