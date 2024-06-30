@@ -22,4 +22,8 @@ export class CellModel {
       value: ""
     });
   }
+
+  setValue(value: string): void {
+    this.value = value;
+  }
 }

@@ -1,6 +1,8 @@
 import { CellModel } from "../model/CellModel";
 import { observer } from 'mobx-react-lite';
-import styled from "styled-components";
+import styled, {css} from "styled-components";
+import {ChangeEventHandler, MouseEventHandler, useCallback} from "react";
+import {CellAddress} from "@/shared";
 
 const Root = styled.div`
   width: 160px;
@@ -22,7 +24,7 @@ const Root = styled.div`
   }
 `;
 
-const Value = styled.span`
+const TextStyles = css`
   font-size: 18px;
   font-weight: 500;
   line-height: 24px;
@@ -30,18 +32,42 @@ const Value = styled.span`
   font-family: var(--main-font);
 `;
 
+const Value = styled.span`
+  ${TextStyles};
+`;
+
+const Input = styled.input`
+  ${TextStyles};
+`;
+
 interface Props {
   model: CellModel;
+  editable?: boolean;
+  onClick: (address: CellAddress) => void;
 }
 
 const Cell = observer((props: Props) => {
-  const { model } = props;
+  const { model, editable, onClick } = props;
+
+  const handleChange = useCallback<ChangeEventHandler<HTMLInputElement>>(e => {
+    const value = e.target.value;
+
+    model.setValue(value);
+  }, [model]);
+
+  const handleClick = useCallback<MouseEventHandler<HTMLDivElement>>(() => {
+    onClick(model.address);
+  }, [model, onClick]);
 
   return (
-    <Root>
-      <Value>
-        {model.computedValue}
-      </Value>
+    <Root onClick={handleClick}>
+      {editable ? (
+        <Input type="text" onChange={handleChange} />
+      ) : (
+        <Value>
+          {model.computedValue}
+        </Value>
+      )}
     </Root>
   );
 });
