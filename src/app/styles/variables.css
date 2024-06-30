@@ -2,6 +2,7 @@
   /* Colors */
   --cell-border-inactive: #ccc5b9;
   --cell-border-hover: #403d39;
+  --cell-border-invalid: #eb5e28;
   --cell-value: #252422;
   --background-main: #ffffff;
   --background-attenuated: #fffcf2;

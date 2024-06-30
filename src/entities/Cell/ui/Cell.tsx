@@ -4,7 +4,7 @@ import styled, {css} from "styled-components";
 import {ChangeEventHandler, MouseEventHandler, useCallback, useEffect, useRef} from "react";
 import {CellAddress} from "@/shared";
 
-const Root = styled.div`
+const Root = styled.div<{ $invalid?: boolean; }>`
   width: 160px;
   height: 40px;
 
@@ -13,7 +13,7 @@ const Root = styled.div`
 
   padding: 8px;
   box-sizing: border-box;
-  border: 0.5px solid var(--cell-border-inactive);
+  border: 0.5px solid ${p => p.$invalid ? 'var(--cell-border-invalid)' : 'var(--cell-border-inactive)'} ;
   transition: var(--main-transition);
   
   &:hover {
@@ -33,6 +33,7 @@ const TextStyles = css`
   color: var(--cell-value);
   font-family: var(--main-font);
   
+  white-space: nowrap;
   overflow: hidden;
 `;
 
@@ -77,7 +78,7 @@ const Cell = observer((props: Props) => {
   }, [model, onClick]);
 
   return (
-    <Root onClick={handleClick}>
+    <Root title={model.computedValue} onClick={handleClick} $invalid={model.invalid}>
       {editable ? (
         <Input ref={inputRef} type="text" value={model.value} onChange={handleChange} />
       ) : (

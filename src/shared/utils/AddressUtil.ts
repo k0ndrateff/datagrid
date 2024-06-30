@@ -13,7 +13,7 @@ export class AddressUtil {
       result += ALPHABET[Math.floor(column / 26) - 1] + ALPHABET[column % 26];
     }
 
-    result += (row + 1).toString(); // Adding 1 to num2 to match the format
+    result += (row + 1).toString();
 
     return result;
   };
