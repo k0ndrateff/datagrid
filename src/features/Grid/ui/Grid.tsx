@@ -2,8 +2,7 @@ import styled from "styled-components";
 import {GridModel} from "../model/GridModel";
 import {observer} from "mobx-react-lite";
 import {Cell} from "@/entities/Cell";
-import {useState} from "react";
-import {CellAddress} from "@/shared";
+import {SelectionModel} from "@/features/Selection";
 
 interface RootProps {
   $columns: number;
@@ -18,20 +17,19 @@ const Root = styled.div<RootProps>`
 
 interface Props {
   model: GridModel;
+  selectionModel: SelectionModel;
 }
 
 const Grid = observer((props: Props) => {
-  const { model } = props;
-
-  const [selectedCell, setSelectedCell] = useState<CellAddress | null>(null);
+  const { model, selectionModel } = props;
 
   return (
     <Root $columns={model.columns} $rows={model.rows}>
       {model.displayCells.map(c => (
         <Cell key={String(c.address)}
               model={c}
-              editable={selectedCell === c.address}
-              onClick={setSelectedCell}
+              editable={selectionModel.selectedCell === c.address}
+              onClick={selectionModel.selectCell}
         />
       ))}
     </Root>
