@@ -3,7 +3,7 @@ import {AddressUtil, FloatingPanel} from "@/shared";
 import {observer} from "mobx-react-lite";
 import styled from "styled-components";
 
-const Value = styled.div`
+const Value = styled.span`
   font-size: 16px;
   font-weight: 500;
   line-height: 22px;
