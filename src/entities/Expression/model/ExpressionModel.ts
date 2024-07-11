@@ -1,21 +1,25 @@
-import {makeAutoObservable} from "mobx";
+import { makeAutoObservable } from "mobx";
+import {functionRegistry} from "./FunctionRegistry";
 
 export class ExpressionModel {
   private readonly expression: string = '';
-
   private index: number = 0;
   private currentChar: string = '';
 
   constructor(expression: string) {
     this.expression = expression;
     this.index = 0;
-    this.currentChar = this.expression[this.index];
-
+    this.currentChar = this.expression[this.index] || '';
     makeAutoObservable(this);
   }
 
   private getNextChar = () => {
-    this.currentChar = this.expression[++this.index];
+    this.index++;
+    if (this.index < this.expression.length) {
+      this.currentChar = this.expression[this.index];
+    } else {
+      this.currentChar = ''; // End of input
+    }
   }
 
   private parseNumber = (): number => {
@@ -23,7 +27,6 @@ export class ExpressionModel {
 
     while (/[0-9.]/.test(this.currentChar)) {
       result += this.currentChar;
-
       this.getNextChar();
     }
 
@@ -48,20 +51,53 @@ export class ExpressionModel {
     return value;
   }
 
+  private parseFunction = (): number => {
+    let functionName = '';
+
+    while (/[a-zA-Z]/.test(this.currentChar)) {
+      functionName += this.currentChar;
+      this.getNextChar();
+    }
+
+    if (functionName in functionRegistry) {
+      if (this.currentChar === '(') {
+        this.getNextChar();
+        const value = this.parseExpression();
+
+        // @ts-expect-error: typescript does not recognize getNextChar()
+        if (this.currentChar !== ')') {
+          throw new Error('Expected closing parenthesis');
+        }
+
+        this.getNextChar();
+        return functionRegistry[functionName](value);
+      } else {
+        throw new Error(`Expected opening parenthesis after function name ${functionName}`);
+      }
+    } else {
+      throw new Error(`Unknown function: ${functionName}`);
+    }
+  }
+
   private parseFactor = (): number => {
     if (this.currentChar === '(') {
       this.getNextChar();
       const value = this.parseExpression();
 
-      // @ts-expect-error: typescript cannot recognize getNextChar() function
+      // @ts-expect-error: typescript does not recognize getNextChar()
       if (this.currentChar !== ')') {
         throw new Error('Expected closing parenthesis');
       }
 
       this.getNextChar();
       return value;
+    } else if (this.currentChar === '-') {
+      this.getNextChar();
+      return -this.parseFactor();
     } else if (/[0-9.]/.test(this.currentChar)) {
       return this.parseNumber();
+    } else if (/[a-zA-Z]/.test(this.currentChar)) {
+      return this.parseFunction();
     } else {
       throw new Error('Unexpected character');
     }
